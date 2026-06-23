@@ -305,7 +305,7 @@ while (girilenSifre !== SIFRE) {
 
             // Yoksa OpenStreetMap Nominatim API'ye sor (Türkiye sınırlandırması ekleyerek hassasiyeti artırdık)
             try {
-                const response = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(text + " Turkey")}&limit=1`);
+                const response = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(text)}&countrycodes=tr&limit=1`);
                 const data = await response.json();
                 if (data && data.length > 0) {
                     return [parseFloat(data[0].lat), parseFloat(data[0].lon)];
