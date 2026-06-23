@@ -226,6 +226,18 @@
     </div>
 
     <script>
+        // Sayfa yüklenir yüklenmez şifre sorar
+const SIFRE = "24072026"; // İstediğin şifreyi buraya yazabilirsin
+let girilenSifre = sessionStorage.getItem("panel_giris");
+
+while (girilenSifre !== SIFRE) {
+    girilenSifre = prompt("Bu panele erişmek için lütfen arkadaş grubuna verilen şifreyi girin:");
+    if (girilenSifre === SIFRE) {
+        sessionStorage.setItem("panel_giris", SIFRE);
+    } else {
+        alert("Hatalı şifre! Tekrar deneyin.");
+    }
+}
         const BENZIN_KURU = 65.00; 
         const ARAC_TUKETIMLERI = { "1": 7.5, "2": 7.0 };
 
