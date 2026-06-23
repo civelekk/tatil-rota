@@ -304,16 +304,23 @@ while (girilenSifre !== SIFRE) {
             }
 
             // Yoksa OpenStreetMap Nominatim API'ye sor (Türkiye sınırlandırması ekleyerek hassasiyeti artırdık)
-            try {
-    const response = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(text)}&countrycodes=tr&limit=1`, {
+          try {
+    // text bilgisini doğrudan güvenli formata çevirip, arama parametrelerini en kararlı şekilde gönderiyoruz
+    const url = `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(text)}&format=json&limit=1&addressdetails=0`;
+    
+    const response = await fetch(url, {
         headers: {
-            'User-Agent': 'TatilRotaApp/1.0 (melih@civelek.com)'
+            'User-Agent': 'TatilRotaApp/1.0 (melih@civelek.com)',
+            'Accept-Language': 'tr-TR,tr;q=0.9' // Telefonun dil karmaşasını çözmek için zorunlu Türkçe dili
         }
     });
     const data = await response.json();
     if (data && data.length > 0) {
         return [parseFloat(data[0].lat), parseFloat(data[0].lon)];
     }
+} catch (error) {
+    console.error("Konum servisi hatası:", error);
+}
 } catch (error) {
     console.error("Konum servisi hatası:", error);
 }
